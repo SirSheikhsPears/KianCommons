@@ -16,15 +16,15 @@ namespace KianCommons {
     }
 
     public static class NetUtil {
-        public static Dictionary<string, int> kTags = ReflectionHelpers.GetFieldValue<NetInfo>("kTags") as Dictionary<string, int>;
+        public static Dictionary<string, int> kTags = ReflectionHelpers.GetFieldValue<DynamicFlags<NetInfo>>("kTags") as Dictionary<string, int>;
 
         /// <summary>
         /// WARNING: low performance!
         /// </summary>
-        public static string[] GetTags(DynamicFlags flags) {
+        public static string[] GetTags(DynamicFlags<NetInfo> flags) {
             List<string> tags = new();
             foreach (string tag in kTags.Keys) {
-                var flag = NetInfo.GetFlags(new[] { tag });
+                var flag = DynamicFlags<NetInfo>.GetFlags(new[] { tag });
                 if (!(flag & flags).IsEmpty) {
                     tags.Add(tag);
                 }
